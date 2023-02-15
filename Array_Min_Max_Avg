@@ -1,0 +1,29 @@
+#include <stdio.h>
+int main()
+{
+    int a[1000],i,n,min=99999,max=-99999,avg=0;
+
+    printf("Enter size of the array : ");
+    scanf("%d",&n);
+
+    printf("Enter elements in array : ");
+    for(i=0; i<n; i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    for(i=0; i<n; i++)
+    {
+         if(min>a[i])
+		  min=a[i];
+		   if(max<a[i])
+		    max=a[i];
+     avg+=a[i];
+    }
+    avg=avg/n;
+     printf("minimum of array is : %d",min);
+     printf("\nmaximum of array is : %d",max);
+     printf("\nAverage of array is : %d",avg);
+
+
+    return 0;
+}
