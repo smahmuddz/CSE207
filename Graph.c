@@ -35,12 +35,12 @@ int main()
         out= 0;
         for(j=0; j<n; j++)
         {
-            if(adj_mat[i][j]==1)
+            if(adj_mat[j][i]==1)
             {
                 indeg++;
                 in++;
             }
-            if(adj_mat[j][i]==1){
+            if(adj_mat[i][j]==1){
                 outdeg++;
                 out++;
             }
