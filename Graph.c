@@ -1,57 +1,60 @@
-#include<stdio.h>
-#include<math.h>
-#include<stdlib.h>
-#define max 9001
-int adj_mat[max][max];
-int main()
-{
-  int i, j, n, indeg = 0, outdeg = 0, in, out;
-    srand(2);
-    printf("Enter the number of Vertices:\n");
-    scanf("%d",&n);
-    printf("\n");
+#include <stdio.h>
 
-    for(i=0; i<n; i++)
-        {
-        for(j=0; j<n; j++)
-        {
-          if(i!=j)
-         {adj_mat[i][j] = rand()%2;}
+#define MAX_VERTICES 100
+
+int main() {
+    int adjacencyMatrix[MAX_VERTICES][MAX_VERTICES];
+    int degrees[MAX_VERTICES];
+    int numVertices, numEdges, i, j;
+    int sumDegrees = 0, sumEdges = 0;
+
+    printf("Enter the number of vertices: ");
+    scanf("%d", &numVertices);
+
+    printf("Enter the adjacency matrix (%dx%d):\n", numVertices, numVertices);
+    for (i = 0; i < numVertices; i++) {
+        for (j = 0; j < numVertices; j++) {
+            scanf("%d", &adjacencyMatrix[i][j]);
         }
-        }
-   for(i=0; i<n; i++)
-    {
-        for(j=0; j<n; j++)
-        {
-            printf("%d ",adj_mat[i][j]);
+    }
+
+    printf("Graph Representation:\n");
+    for (i = 0; i < numVertices; i++) {
+        for (j = 0; j < numVertices; j++) {
+            printf("%d ", adjacencyMatrix[i][j]);
         }
         printf("\n");
     }
-      printf("\n Vertex \t indegree \t out degree");
 
-    for(i=0; i<n; i++)
-    {
-        in= 0;
-        out= 0;
-        for(j=0; j<n; j++)
-        {
-            if(adj_mat[j][i]==1)
-            {
-                indeg++;
-                in++;
+    for (i = 0; i < numVertices; i++) {
+        degrees[i] = 0;
+        for (j = 0; j < numVertices; j++) {
+            if (adjacencyMatrix[i][j] == 1) {
+                degrees[i]++;
+                if (i == j) { // Diagonal edge, increment degrees again
+                    degrees[i]++;
+                }
+                if (i >= j) { // Consider only lower triangle (including diagonal)
+                    sumEdges++;
+                }
             }
-            if(adj_mat[i][j]==1){
-                outdeg++;
-                out++;
-            }
-            }
-
-        printf("\n\n %5d \t\t %d \t\t %d\n\n",i+1,in,out);
+        }
     }
 
-    printf("\n  The total inDegree is : %d\n",indeg);
-    printf("\n  The total out degree is : %d\n",outdeg);
+    printf("Degrees of vertices:\n");
+    for (i = 0; i < numVertices; i++) {
+        printf("Vertex %d: %d\n", i, degrees[i]);
+        sumDegrees += degrees[i];
+    }
 
-     printf("\n");
-     return 0;
+    printf("Total Degrees: %d\n", sumDegrees);
+    printf("Total Edges: %d\n", sumEdges);
+
+    if (sumDegrees == 2 * sumEdges) {
+        printf("Handshaking rule holds true.\n");
+    } else {
+        printf("Error: Violation of the handshaking rule.\n");
+    }
+
+    return 0;
 }
